@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Biblioteca</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #243b55;
+        }
+
+        #estado {
+            color: green;
+            font-weight: bold;
+        }
+
+        #notificaciones {
+            background: white;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #ccc;
+        }
+
+        .aviso {
+            padding: 12px;
+            margin: 10px;
+            background: #e3f2fd;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Sistema de Gestión de Biblioteca</h1>
+
+    <p>Estado de conexión:</p>
+    <p id="estado">Conectando...</p>
+
+    <h2>Notificaciones en tiempo real</h2>
+
+    <div id="notificaciones">
+        <p>Esperando nuevos eventos...</p>
+    </div>
+
+    <script>
+        const socket = io();
+
+        const estado = document.getElementById('estado');
+        const notificaciones = document.getElementById('notificaciones');
+
+        socket.on('connect', () => {
+            estado.textContent = 'Conectado correctamente';
+            estado.style.color = 'green';
+        });
+
+        socket.on('disconnect', () => {
+            estado.textContent = 'Desconectado';
+            estado.style.color = 'red';
+        });
+
+        function mostrarNotificacion(mensaje) {
+            const aviso = document.createElement('div');
+            aviso.className = 'aviso';
+            aviso.textContent = mensaje;
+
+            if (notificaciones.querySelector('p')) {
+                notificaciones.innerHTML = '';
+            }
+
+            notificaciones.prepend(aviso);
+        }
+
+        socket.on('prestamoCreado', (datos) => {
+            mostrarNotificacion(datos.mensaje);
+        });
+
+        socket.on('libroDevuelto', (datos) => {
+            mostrarNotificacion(datos.mensaje);
+        });
+    </script>
+
+</body>
+</html>
