@@ -101,3 +101,14 @@ Se realizaron pruebas mediante Postman para verificar:
 ## 8. Conclusión
 
 El desarrollo de este proyecto permitió aplicar los conocimientos de programación web mediante la construcción de una API REST conectada a una base de datos NoSQL. Se implementaron operaciones CRUD, validaciones, gestión de sesiones y comunicación en tiempo real. Las pruebas realizadas permitieron comprobar el funcionamiento de los principales módulos del sistema.
+## 9. Estructura del proyecto
+
+El proyecto está organizado en las siguientes carpetas:
+
+- config: configuración de la conexión a MongoDB.
+- controllers: lógica de las operaciones del sistema.
+- models: modelos y esquemas de la base de datos.
+- routes: rutas de los endpoints de la API.
+- public: interfaz web para mostrar notificaciones.
+- app.js: archivo principal del servidor.
+- .env.example: ejemplo de configuración de variables de entorno.
